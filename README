@@ -1,0 +1,35 @@
+=simple_mysql_wrapper
+under  New BSD License
+(c) Yoichiro Hino
+
+=sample code
+
+require 'mysql_wrapper'
+
+MySQLWrapper::connect( NenpyoDB::DB_INFO) do |db|
+	db.select_array( "SELECT id, name, age FROM employees") do |employee|
+		p employee[0]
+		p employee[1]
+	end
+	db.select_hash( "SELECT id, name, age FROM employees where age > 25", {:age => 25, :limit => 10}) do |employee|
+	#db.select_hash( "SELECT id, name, age FROM employees where age > 25", {:age => 25, :limit => [0,10]}) do |employee|
+		p employee[:id]
+		p employee[:name]
+		p employee[:age]
+	end
+	
+	tom = sb.select_one_hash( "SELECT id, name FROM employees where name = :name", {:name => 'tom'})
+	p tom[:name] if tom
+	
+	employdb.select_hash( "SELECT id, name FROM employees") do |employee|
+		p employee[:id]
+		p employee[:name]
+	end
+	
+	db.transaction do
+		db.execute( "UPDATE age = 26 WHERE name = :name", {:name => tom})
+		db.execute( "INSERT INTO employees values( NULL, :name, age)", {:name => "jack", :age => 30})
+	end
+end
+
+	
