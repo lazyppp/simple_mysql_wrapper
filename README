@@ -11,8 +11,8 @@ MySQLWrapper::connect( NenpyoDB::DB_INFO) do |db|
 		p employee[0]
 		p employee[1]
 	end
-	db.select_hash( "SELECT id, name, age FROM employees where age > 25", {:age => 25, :limit => 10}) do |employee|
-	#db.select_hash( "SELECT id, name, age FROM employees where age > 25", {:age => 25, :limit => [0,10]}) do |employee|
+	db.select_hash( "SELECT id, name, age FROM employees where age > :age", {:age => 25, :limit => 10}) do |employee|
+	#db.select_hash( "SELECT id, name, age FROM employees where age > :age", {:age => 25, :limit => [0,10]}) do |employee|
 		p employee[:id]
 		p employee[:name]
 		p employee[:age]

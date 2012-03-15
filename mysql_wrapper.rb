@@ -5,13 +5,12 @@ require 'mysql'
 
 class MySQLWrapper
 
-	DB_INFO = {:host=>"localhost",:user=>"root", ;password=>"hogehoge"}
+	DB_INFO = {:host=>"localhost",:user=>"root", :password=>"hogehoge"}
 
 	def self.connect arg
 		begin
 			db = Mysql::connect( arg[:host].to_s, arg[:user].to_s, arg[:password].to_s, arg[:db].to_s)
 			yield MySQLWrapper.new( db)
-		# 例外の救出
 		rescue Mysql::Error => e
 		 	p "[Error:#{e.errno}] #{e.error}"
 		ensure
